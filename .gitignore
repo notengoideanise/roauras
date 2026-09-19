@@ -10,6 +10,7 @@ transfer/
 *.log
 *.log.*
 overlay-settings.json
+!data/overlay-settings.json
 
 # IDE/user files
 .vs/
