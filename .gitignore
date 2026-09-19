@@ -1,0 +1,22 @@
+# .NET build output
+**/bin/
+**/obj/
+publish/
+
+# Generated release staging and archives
+transfer/
+
+# Local runtime data
+*.log
+*.log.*
+overlay-settings.json
+
+# IDE/user files
+.vs/
+*.user
+*.suo
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/

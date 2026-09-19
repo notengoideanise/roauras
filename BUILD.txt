@@ -1,0 +1,25 @@
+Refuge Cooldown Overlay (read-only)
+RID: win-x64, self-contained single-file; skill icon art packaged under icons/
+
+What changed in this build (post-first-Windows-feedback fixes)
+- Real client skill icons (1,168 of 1,449 dump skills have art; NPC/mercenary
+  skills without client art show a dark monogram tile - never fake art).
+- Every skill carries its real client numeric ID as runtime key: the three
+  host-validated pairs (Loki's Mark 78, Alpha 2326, Cursed Coffin 2343) show
+  live countdowns; all others show a subtle "?" badge until validated - they
+  never fake readiness.
+- Tile order, columns, rows (0=auto), icon size, spacing all configurable;
+  search filtering never loses selection or order.
+- Position: drag with Configure open; anchor saved relative to the PRM window,
+  never as a screen coordinate.
+- Overlay is visible ONLY while PRM is the foreground window; Alt-Tab hides it.
+- Click-through re-hardened: HTTRANSPARENT + WM_MOUSEACTIVATE=MA_NOACTIVATE;
+  the overlay cannot take focus or consume game input in display mode.
+- Status window removed. Diagnostics go to overlay.log (rolling, 1 MiB x2) in
+  the app folder; tray has "Open Log Folder". UI exceptions are logged.
+- Dark theme preserved.
+
+Binding/elevation: attach by discovery (PRM.exe / PRM-patch*.exe, lowest PID)
+with exact SHA-256 gate before OpenProcess; run with the same elevation as PRM.
+Safety: read-only OpenProcess(query+read) + ReadProcessMemory only; no writes,
+injection, hooks, packets, input automation, or networking.

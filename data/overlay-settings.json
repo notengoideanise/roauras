@@ -1,0 +1,17 @@
+{
+  "processName": "PRM",
+  "selectedSkillSlugs": [
+    "gravekeeper/loki-s-mark",
+    "executioner/alpha",
+    "gravekeeper/cursed-coffin"
+  ],
+  "anchorX": 40,
+  "anchorY": 40,
+  "iconSize": 48,
+  "columns": 3,
+  "rows": 0,
+  "spacing": 6,
+  "opacity": 0.9,
+  "clickThrough": true,
+  "pollMilliseconds": 50
+}

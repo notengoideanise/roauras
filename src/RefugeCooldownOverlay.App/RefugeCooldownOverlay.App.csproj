@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>10.0</LangVersion>
+    <RootNamespace>RoAuras</RootNamespace>
+    <AssemblyName>RoAuras</AssemblyName>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <!-- Windows-only shell. Build/publish on a Windows host with the .NET 6 SDK. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RefugeCooldownOverlay.Core\RefugeCooldownOverlay.Core.csproj" />
+  </ItemGroup>
+
+</Project>

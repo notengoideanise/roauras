@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>10.0</LangVersion>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RefugeCooldownOverlay.Tests</RootNamespace>
+    <!-- Offline test runner following the PrmChatDiagnostic pattern: no external test packages, no PRM dependency. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RefugeCooldownOverlay.Core\RefugeCooldownOverlay.Core.csproj" />
+  </ItemGroup>
+
+</Project>
