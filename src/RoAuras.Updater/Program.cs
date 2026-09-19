@@ -65,7 +65,8 @@ internal static class Program
             {
                 var relative = Path.GetRelativePath(source, file);
                 if (relative.Equals("overlay-settings.json", StringComparison.OrdinalIgnoreCase)
-                    || relative.StartsWith("overlay.log", StringComparison.OrdinalIgnoreCase)) continue;
+                    || relative.StartsWith("overlay.log", StringComparison.OrdinalIgnoreCase)
+                    || relative.Equals("RoAurasUpdater.exe", StringComparison.OrdinalIgnoreCase)) continue;
                 var destination = Path.Combine(root, relative);
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 File.Copy(file, destination, overwrite: true);
