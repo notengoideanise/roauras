@@ -20,8 +20,8 @@ public sealed record ProcessProfile(
 
 /// <summary>
 /// Registry of exact SHA-256 allowlisted client builds. Patch 15 and Patch 16 are
-/// byte-identical to Patch 14 (same digest); Patch 18 has matching static timer
-/// regions and uses the same offsets pending live Windows confirmation.
+/// byte-identical to Patch 14 (same digest); Patch 18 and Patch 19 have matching
+/// static timer regions and use the same offsets pending live Windows confirmation.
 /// There is deliberately no version-string or file-size fallback.
 /// </summary>
 public static class ProcessProfiles
@@ -31,9 +31,11 @@ public static class ProcessProfiles
     public const string Patch13Sha256 =
         "a0b100d4c8f7a947f9c2f8065529d432fd973e69809212d94991b465d10a47f9";
     public const string Patch14Sha256 =
-        "205697800e6c02ebf17a15c87008d67a0ce0b7c32a3666cdf70926755";
+        "205697800e6c02ebf17a7bea17a15c87008d67a0ce0b7c32a3666cdf70926755";
     public const string Patch18Sha256 =
         "7e96f64968558b88d6fe7d4bdc7a12a15231ee30f942159babe54a9c99b1cc90";
+    public const string Patch19Sha256 =
+        "5c7086ed403917c4df6ef84cb6b7d2dba3301140662c6334f8845ad588f2c373";
 
     private static readonly Dictionary<string, ProcessProfile> Registry = Build();
 
@@ -57,6 +59,11 @@ public static class ProcessProfiles
             Id = "patch18",
             DisplayName = "Patch 18 (static match; Windows validation pending)",
         };
+        var patch19 = patch18 with
+        {
+            Id = "patch19",
+            DisplayName = "Patch 19 (static match; Windows validation pending)",
+        };
 
         var entries = new Dictionary<string, ProcessProfile>(StringComparer.OrdinalIgnoreCase)
         {
@@ -64,6 +71,7 @@ public static class ProcessProfiles
             [Patch13Sha256] = patch13,
             [Patch14Sha256] = patch14,
             [Patch18Sha256] = patch18,
+            [Patch19Sha256] = patch19,
         };
         return entries;
     }

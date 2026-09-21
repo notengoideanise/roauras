@@ -34,7 +34,7 @@ $dataFiles = @(
 $updateConfig = @'
 {
   "manifestUrl": "https://raw.githubusercontent.com/notengoideanise/roauras/main/roauras-update.json",
-  "version": "0.1.1"
+  "version": "0.1.2"
 }
 '@
 $packageDocuments = @()

@@ -276,6 +276,7 @@ Run("ExactHashRegistryAcceptsKnownBuilds", () =>
     Assert(p14.DisplayName.Contains("Patch 16"), "patch16 alias carried by patch14 profile");
     Assert(ProcessProfiles.IsSupported(ProcessProfiles.Patch14Sha256), "patch16 hash == patch14 hash accepted");
     Assert(ProcessProfiles.TryGetByHash(ProcessProfiles.Patch18Sha256)!.Id == "patch18", "patch18 exact hash accepted");
+    Assert(ProcessProfiles.TryGetByHash(ProcessProfiles.Patch19Sha256)!.Id == "patch19", "patch19 exact hash accepted");
 });
 
 Run("RejectsUnknownProfileBeforeOpen", () =>
