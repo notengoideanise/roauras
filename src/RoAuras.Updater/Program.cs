@@ -10,6 +10,7 @@ internal static class Program
     private const string AppExe = "RoAuras.exe";
     private const string ManifestFile = "roauras-update.json";
     private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(30) };
+    private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
     [STAThread]
     private static void Main()
@@ -39,7 +40,7 @@ internal static class Program
     {
         var path = Path.Combine(root, ManifestFile);
         if (!File.Exists(path)) return null;
-        return JsonSerializer.Deserialize<UpdateConfig>(File.ReadAllText(path));
+        return JsonSerializer.Deserialize<UpdateConfig>(File.ReadAllText(path), JsonOptions);
     }
 
     private static void ApplyUpdate(string root, UpdateConfig config)
@@ -47,7 +48,7 @@ internal static class Program
         if (string.IsNullOrWhiteSpace(config.ManifestUrl)) return;
         using var response = Http.GetAsync(config.ManifestUrl, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
         if (!response.IsSuccessStatusCode) return;
-        var manifest = JsonSerializer.Deserialize<UpdateManifest>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+        var manifest = JsonSerializer.Deserialize<UpdateManifest>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), JsonOptions);
         if (manifest is null || string.IsNullOrWhiteSpace(manifest.Version) || string.IsNullOrWhiteSpace(manifest.PackageUrl)) return;
         if (Version.TryParse(config.Version, out var current) && Version.TryParse(manifest.Version, out var latest) && latest <= current) return;
 
