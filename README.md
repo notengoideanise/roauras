@@ -10,7 +10,8 @@ No database/base cooldown value ever drives the display.
 - **Read-only process access** (`OpenProcess` query+read, `ReadProcessMemory`). No
   writes, injection, hooks, packet access, input generation, or networking.
 - **Exact SHA-256 build gate** before any process open or offset read
-  (legacy / patch13 / patch14 profiles; Patch 15/16 are byte-identical to Patch 14).
+  (legacy / patch13 / patch14 profiles; Patch 15/16 are byte-identical to Patch 14;
+  Patch 18/19/20 require their own exact hashes and reviewed timer regions).
 - Unknown or near-match builds are rejected **before** the process is opened.
 - **Discovery:** default `processName` ("PRM") matches `PRM.exe` and
   `PRM-patch*.exe`; explicit `processName` matches exactly. Lowest PID wins;
@@ -60,8 +61,11 @@ Package (Windows or cross-publish with pwsh + .NET SDK):
 pwsh -File cooldown-overlay/package.ps1
 ```
 
-Output: `cooldown-overlay/transfer/refuge-cooldown-overlay-win-x64.zip` + `.sha256`
-sidecar (executable + catalog + 1,168 icons + settings template + docs).
+Output: `cooldown-overlay/transfer/roauras-win-x64.zip` + `.sha256`
+sidecar (executable, updater, catalog, 1,168 icons, and settings template). Run
+`RoAurasUpdater.exe` from installed folder to check configured GitHub manifest,
+apply verified package, then launch RoAuras. Offline/update failures fall back to
+installed app.
 
 ## Limitations
 

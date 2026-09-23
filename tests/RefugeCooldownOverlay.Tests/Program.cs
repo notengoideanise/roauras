@@ -277,6 +277,13 @@ Run("ExactHashRegistryAcceptsKnownBuilds", () =>
     Assert(ProcessProfiles.IsSupported(ProcessProfiles.Patch14Sha256), "patch16 hash == patch14 hash accepted");
     Assert(ProcessProfiles.TryGetByHash(ProcessProfiles.Patch18Sha256)!.Id == "patch18", "patch18 exact hash accepted");
     Assert(ProcessProfiles.TryGetByHash(ProcessProfiles.Patch19Sha256)!.Id == "patch19", "patch19 exact hash accepted");
+    Assert(ProcessProfiles.TryGetByHash(ProcessProfiles.Patch20Sha256)!.Id == "patch20", "patch20 exact hash accepted");
+    var patch19 = ProcessProfiles.TryGetByHash(ProcessProfiles.Patch19Sha256)!;
+    var patch20 = ProcessProfiles.TryGetByHash(ProcessProfiles.Patch20Sha256)!;
+    Assert(patch20.TimerListRootPreferredVa == patch19.TimerListRootPreferredVa &&
+           patch20.ManagerPreferredVa == patch19.ManagerPreferredVa &&
+           patch20.GameModeVtablePreferredVa == patch19.GameModeVtablePreferredVa,
+           "patch20 reuses only statically matching patch19 timer layout");
 });
 
 Run("RejectsUnknownProfileBeforeOpen", () =>
@@ -508,11 +515,26 @@ Run("IconArtifactsPackaged", () =>
 
 // ---------- Process discovery policy (portable) ----------
 
+Run("UpdaterDistributionContract", () =>
+{
+    var packageScript = File.ReadAllText(Path.GetFullPath(Path.Combine(
+        AppContext.BaseDirectory, "../../../../../package.ps1")));
+    Assert(packageScript.Contains("RoAuras.Updater/RoAuras.Updater.csproj", StringComparison.Ordinal),
+        "package script must publish existing updater project");
+    Assert(packageScript.Contains("RoAurasUpdater.exe", StringComparison.Ordinal),
+        "package script must stage updater executable");
+    Assert(packageScript.Contains("roauras-update.json", StringComparison.Ordinal),
+        "package script must stage updater manifest/config");
+    Assert(packageScript.Contains("$dataFiles + $appExeName + $updaterExeName + $updateConfigName", StringComparison.Ordinal),
+        "package script must require updater and config in final package");
+});
+
 Run("DiscoveryDefaultAcceptsPrmAndPatchNames", () =>
 {
     Assert(ProcessDiscovery.Matches("PRM", null), "default accepts PRM.exe");
     Assert(ProcessDiscovery.Matches("prm", null), "default match is case-insensitive");
     Assert(ProcessDiscovery.Matches("PRM-patch16", null), "default accepts current PRM-patch16.exe");
+    Assert(ProcessDiscovery.Matches("PRM-patch20", null), "default accepts Patch 20 PRM executable name");
     Assert(ProcessDiscovery.Matches("PRM-patch13", null), "default accepts other patch names");
     Assert(ProcessDiscovery.Matches("PRM-patch-whatever", null), "default accepts future patch names");
     Assert(ProcessDiscovery.IsDefaultSelection(null) && ProcessDiscovery.IsDefaultSelection("PRM")
